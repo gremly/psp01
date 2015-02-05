@@ -4,6 +4,10 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.HashMap;
 
+/**
+ * Clase encargada de gestionar el recorrido de los directorios
+ * de los proyectos y extraer sus archivos de código fuente .java.
+ */
 public class FileManager {
 
 	/**
@@ -18,18 +22,19 @@ public class FileManager {
 	/**
 	 * Se encarga de recorrer el directorio identificando los proyectos y
 	 * procesar sus archivos.
+	 * @return Retorna una tabla hash donde la llave es el nombre del proyecto
+	 * y el valor es su número de líneas.
 	 */
-	public void processProjects(){
+	public HashMap<String, Integer> processProjects(){
 		File root = new File( this.path );
         File[] projectList = root.listFiles();
-
         HashMap<String, Integer> resultado = new HashMap<String, Integer>(); 
                 
         for (File project: projectList){
         	resultado.put(project.getName(),  this.inspectDir(project, 0));
-        	System.out.println(project.getName() +"-----"+ resultado.get(project.getName()));
         }
         
+        return resultado;
 	}
 	
 	/**
@@ -43,16 +48,17 @@ public class FileManager {
         	for ( File f : list ) {
                 if ( f.isDirectory() ) {
                 	totalLines = inspectDir(f, totalLines);
+                	
                 } else {
                 	Counter counter = new Counter();
+                	
                     if(f.getName().endsWith(".java")){
                     	try {
                     		totalLines += counter.countLines(Files.readAllLines(f.toPath()));
                 		} catch (Exception e) {
                 			System.out.println("Error: "  + e.getMessage());
-                		}
-                   }
-                    	
+                		}	
+                   }     	
                 }
             }	
         }  

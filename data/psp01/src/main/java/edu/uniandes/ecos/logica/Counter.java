@@ -31,9 +31,12 @@ public class Counter {
 	 */
 	private boolean isValidLine(String line){
 		boolean isValid = true;	
+		
 		if (line.isEmpty()) {
 			isValid = false;
 		} else if (line.trim().startsWith("/*") ||  line.trim().startsWith("//") || line.trim().startsWith("*")){
+			isValid = false;
+		} else if (line.trim().equals("}")) {
 			isValid = false;
 		}
 		

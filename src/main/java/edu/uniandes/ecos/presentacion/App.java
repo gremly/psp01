@@ -51,6 +51,8 @@ public class App extends HttpServlet {
 		  		pw.write("<th>"+project.getKey()+ "</th>");
 		  		pw.write("<td style=\"text-align: center;\">"+project.getValue()+ "</td>");
 		  		pw.write("</tr>");
+		  		System.out.println("-------------------------------");
+		  		System.out.println("Projecto: " + project.getKey()  + "  Líneas: " + project.getValue());
 			}
 		  	
 		  	pw.write("</table>");
